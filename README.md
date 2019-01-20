@@ -9,3 +9,5 @@ Tools Used In this Project:
 - Firebase.
 - SwipeCards.
 - Google Maps API
+
+Download the .zip archive extract and install .apk onto an Android device to run app.
