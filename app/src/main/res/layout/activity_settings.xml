@@ -5,41 +5,83 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.suluhu.goalmate.SettingsActivity"
-    android:orientation="vertical"
-    android:padding="20sp">
-    <ImageView
-        android:layout_width="100sp"
-        android:layout_height="100sp"
-        android:id="@+id/profileImage"
-        android:src="@mipmap/ic_launcher"
-        android:layout_marginBottom="20sp" />
+    android:orientation="vertical">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
-        android:background="@null"
-        android:hint="Username" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <EditText
-        android:id="@+id/phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
-        android:background="@null"
-        android:hint=" Phone Number"
-        android:inputType="phone" />
+    </android.support.design.widget.AppBarLayout>
 
-    <Button
-        android:id="@+id/confirm"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/back"
-        android:text="back"/>
+        android:layout_marginTop="16dp"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/confirm"
+            android:layout_toLeftOf="@id/confirm"
+            android:layout_alignParentTop="true"
+            android:background="#00000000"
+            android:textColor="@color/red"
+            android:text="back"/>
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="#00000000"
+            android:textColor="@color/red"
+            android:text="Save" />
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileImage"
+            android:padding="4dp"
+            android:layout_marginBottom="16dp"
+            android:background="@null"
+            android:hint="Username"
+            android:inputType="text"/>
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:padding="4dp"
+            android:layout_marginBottom="16dp"
+            android:background="@null"
+            android:hint="Phone Number"
+            android:inputType="phone" />
+    </RelativeLayout>
 
 </LinearLayout>

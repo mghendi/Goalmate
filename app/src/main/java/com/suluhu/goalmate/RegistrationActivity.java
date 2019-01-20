@@ -1,9 +1,12 @@
 package com.suluhu.goalmate;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +28,7 @@ import java.util.Map;
 public class RegistrationActivity extends AppCompatActivity {
 
     private Button mRegister;
+    private CardView mGoToLogin;
     private EditText mEmail, mPassword, mName;
 
     private RadioGroup mRadioGroup;
@@ -32,10 +36,15 @@ public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
 
+    // boolean backPressed = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         mAuth = FirebaseAuth.getInstance();
         firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -43,7 +52,7 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user !=null){
-                    Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                    Intent intent = new Intent(RegistrationActivity.this, AssembleActivity.class);
                     startActivity(intent);
                     finish();
                     return;
@@ -51,25 +60,20 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         };
 
-
-        mRegister = (Button) findViewById(R.id.register);
-
-        mEmail = (EditText) findViewById(R.id.email);
-        mPassword = (EditText) findViewById(R.id.password);
-        mName = (EditText) findViewById(R.id.name);
-
-        mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        mRegister = findViewById(R.id.btnSignUp);
+        mGoToLogin = findViewById(R.id.cardGoToLogin);
+        mName = findViewById(R.id.etUsername);
+        mEmail = findViewById(R.id.etEmail);
+        mPassword = findViewById(R.id.etPassword);
+        mRadioGroup = findViewById(R.id.radioGroup);
 
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int selectId = mRadioGroup.getCheckedRadioButtonId();
+                final RadioButton radioButton = findViewById(selectId);
 
-                final RadioButton radioButton = (RadioButton) findViewById(selectId);
-
-                if(radioButton.getText() == null){
-                    return;
-                }
+                if(radioButton.getText() == null) return;
 
                 final String email = mEmail.getText().toString();
                 final String password = mPassword.getText().toString();
@@ -78,7 +82,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(!task.isSuccessful()){
-                            Toast.makeText(RegistrationActivity.this, "sign up error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationActivity.this, "Sign Up Error!", Toast.LENGTH_SHORT).show();
                         }else{
                             String userId = mAuth.getCurrentUser().getUid();
                             DatabaseReference currentUserDb = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
@@ -90,6 +94,13 @@ public class RegistrationActivity extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        mGoToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

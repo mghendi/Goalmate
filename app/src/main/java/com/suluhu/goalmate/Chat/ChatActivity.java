@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,10 +42,13 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getIntent().getExtras().getString("matchName"));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         matchId = getIntent().getExtras().getString("matchId");
-
         currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
         mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID).child("connections").child("matches").child(matchId).child("ChatId");
         mDatabaseChat = FirebaseDatabase.getInstance().getReference().child("Chat");
 
@@ -58,11 +64,25 @@ public class ChatActivity extends AppCompatActivity {
 
         mSendEditText = findViewById(R.id.message);
         mSendButton = findViewById(R.id.send);
-
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendMessage();
+            }
+        });
+
+        mSendEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mSendButton.setVisibility(count==0?View.GONE:View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
     }

@@ -7,39 +7,21 @@
     tools:context="com.suluhu.goalmate.RegistrationActivity"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
+    <android.support.design.widget.AppBarLayout
         android:layout_height="wrap_content"
-        android:hint="Enter a Username" />
-    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/radioGroup">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Male" />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Female" />
-    </RadioGroup>
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your Email Address" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/register"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_signup"/>
+
 </LinearLayout>

@@ -1,11 +1,61 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/red</item>
+        <item name="colorAccent">@color/red</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/nunito_extralight</item>
+    </style>
+
+    <style name="AppTheme.White" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/red</item>
+        <item name="colorAccent">@color/red</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/nunito_extralight</item>
+    </style>
+
+    <style name="AppTheme.Red" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryDark">@color/red</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/red</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:fontFamily">@font/nunito_extralight</item>
+    </style>
+
+    <style name="AppTheme.Chat" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/red</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/nunito_extralight</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:fontFamily">@font/nunito_light</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat">
+        <item name="android:fontFamily">@font/nunito_light</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay.Alt" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:fontFamily">@font/nunito_light</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay.Alt" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:fontFamily">@font/nunito_light</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Goalmate</string>
+    <string name="title_activity_setup">SetupActivity</string>
+    <string name="title_activity_explore">ExploreActivity</string>
 </resources>

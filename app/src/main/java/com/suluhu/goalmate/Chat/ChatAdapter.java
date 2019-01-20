@@ -2,11 +2,14 @@ package com.suluhu.goalmate.Chat;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.print.PrintAttributes;
+import android.support.design.card.MaterialCardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.suluhu.goalmate.R;
 
@@ -40,16 +43,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolders>{
     @Override
     public void onBindViewHolder(ChatViewHolders holder, int position) {
         holder.mMessage.setText(chatList.get(position).getMessage());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if(chatList.get(position).getCurrentUser()){
-            holder.mMessage.setGravity(Gravity.END);
+            holder.mContainer.setGravity(Gravity.RIGHT);
             holder.mMessage.setTextColor(Color.parseColor("#404040"));
-            holder.mContainer.setBackgroundColor(Color.parseColor("#F4F4F4"));
+            holder.mCard.setCardBackgroundColor(Color.parseColor("#F5F5F5"));
+            holder.mContainer.setBackgroundColor(Color.parseColor("#FFFFFF"));
         }else{
-            holder.mMessage.setGravity(Gravity.START);
+            holder.mContainer.setGravity(Gravity.LEFT);
             holder.mMessage.setTextColor(Color.parseColor("#FFFFFF"));
-            holder.mContainer.setBackgroundColor(Color.parseColor("#2DB4C8"));
+            holder.mCard.setCardBackgroundColor(Color.parseColor("#B12222"));
+            holder.mContainer.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            // holder.mCard.setBackgroundColor(Color.parseColor("#2DB4C8")); // Blue
         }
-
     }
 
     @Override

@@ -1,10 +1,15 @@
 package com.suluhu.goalmate;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import com.suluhu.goalmate.Cards.arrayAdapter;
 import com.suluhu.goalmate.Cards.cards;
+import com.suluhu.goalmate.Chat.ChatActivity;
+import com.suluhu.goalmate.Explore.ExploreActivity;
 import com.suluhu.goalmate.Matches.MatchesActivity;
 
 import java.util.ArrayList;
@@ -35,29 +42,46 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference usersDb;
 
-
     ListView listView;
     List<cards> rowItems;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_explore:
+                    goToActivity(ExploreActivity.class);
+                    return true;
+                case R.id.navigation_chat:
+                    goToActivity(MatchesActivity.class);
+                    return true;
+                case R.id.navigation_profile:
+                    goToActivity(SettingsActivity.class);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         usersDb = FirebaseDatabase.getInstance().getReference().child("Users");
-
         mAuth = FirebaseAuth.getInstance();
         currentUId = mAuth.getCurrentUser().getUid();
 
         checkUserSex();
-
         rowItems = new ArrayList<cards>();
-
         arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems );
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
-
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -69,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-
                 cards obj = (cards) dataObject;
                 String userId = obj.getUserId();
                 usersDb.child(userId).child("connections").child("no").child(currentUId).setValue(true);
@@ -94,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         // Optionally add an OnItemClickListener
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
@@ -103,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     private void isConnectionMatch(String userId) {
@@ -111,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
-                    Toast.makeText(MainActivity.this, "new Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "New Connection!", Toast.LENGTH_LONG).show();
 
                     String key = FirebaseDatabase.getInstance().getReference().child("Chat").push().getKey();
 
@@ -188,24 +212,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void goToActivity(Class nextClass) {
+        startActivity(new Intent(MainActivity.this, nextClass));
+    }
 
-    public void logoutUser(View view) {
+    public void logoutUser() {
         mAuth.signOut();
-        Intent intent = new Intent(MainActivity.this, ChooseLoginRegistrationActivity.class);
+        Intent intent = new Intent(MainActivity.this, Splash.class);
         startActivity(intent);
         finish();
         return;
     }
 
-    public void goToSettings(View view) {
-        Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-        startActivity(intent);
-        return;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
-    public void goToMatches(View view) {
-        Intent intent = new Intent(MainActivity.this, MatchesActivity.class);
-        startActivity(intent);
-        return;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_log_out:
+                logoutUser();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
