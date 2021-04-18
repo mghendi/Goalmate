@@ -1,4 +1,4 @@
-Goalmate 
+# Goalmate 
 
 This is an Android dating app based on finding matches with similar goals and interests. It includes Chat, SwipeCards and location-based matching(under-development).
 
